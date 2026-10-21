@@ -1,0 +1,31 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+build/
+
+# env / secrets
+.env
+.env.local
+.env.*.local
+
+# local npm cache (used because the global ~/.npm cache was not writable)
+.npm-cache/
+
+# 模型通过 function call 在沙箱里创建的文件，不应进版本库
+server/sandbox/
+
+# logs
+*.log
+npm-debug.log*
+
+# editor / OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# misc
+coverage/
+*.tsbuildinfo

@@ -1,0 +1,25 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "LLM streaming TUI: single agent + multi-agent + MCP server",
+  "scripts": {
+    "start": "tsx src/AI_Agent/tui/Base_tui.ts",
+    "start:multi": "tsx src/Multi_agent/tui.ts",
+    "mcp": "tsx src/AI_Agent/mcp/main.ts",
+    "dev": "tsx watch src/AI_Agent/tui/Base_tui.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "dotenv": "^16.4.7",
+    "openai": "^4.77.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

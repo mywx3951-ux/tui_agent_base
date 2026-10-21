@@ -1,0 +1,304 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "订单服务 API",
+        "version": "1.0.0",
+        "description": "订单查询与创建接口，用于演示根据 IDL 生成 mock 数据"
+    },
+    "servers": [
+        {
+            "url": "https://api.example.com/v1"
+        }
+    ],
+    "paths": {
+        "/orders": {
+            "get": {
+                "summary": "分页查询订单列表",
+                "operationId": "listOrders",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 10,
+                            "maximum": 100
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "schema": {
+                            "$ref": "#/components/schemas/OrderStatus"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "订单分页结果",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "ok"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "total": {
+                                                    "type": "integer",
+                                                    "example": 128
+                                                },
+                                                "page": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "pageSize": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "list": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Order"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "创建订单",
+                "operationId": "createOrder",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateOrderRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "创建成功，返回订单详情",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "ok"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Order"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{orderId}": {
+            "get": {
+                "summary": "根据订单 ID 查询订单详情",
+                "operationId": "getOrderById",
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "订单详情",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "ok"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Order"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "订单不存在",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "code": {
+                                            "type": "integer",
+                                            "example": 40400
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "订单不存在"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "OrderStatus": {
+                "type": "string",
+                "enum": [
+                    "pending",
+                    "paid",
+                    "shipped",
+                    "completed",
+                    "cancelled"
+                ],
+                "description": "订单状态"
+            },
+            "OrderItem": {
+                "type": "object",
+                "required": [
+                    "skuId",
+                    "skuName",
+                    "price",
+                    "quantity"
+                ],
+                "properties": {
+                    "skuId": {
+                        "type": "string",
+                        "example": "SKU-10086"
+                    },
+                    "skuName": {
+                        "type": "string",
+                        "example": "无线蓝牙耳机"
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 199.0
+                    },
+                    "quantity": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "example": 2
+                    }
+                }
+            },
+            "Order": {
+                "type": "object",
+                "required": [
+                    "orderId",
+                    "userId",
+                    "status",
+                    "items",
+                    "totalAmount",
+                    "createdAt"
+                ],
+                "properties": {
+                    "orderId": {
+                        "type": "string",
+                        "example": "ORD-20261015-0001"
+                    },
+                    "userId": {
+                        "type": "string",
+                        "example": "U-10001"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/OrderStatus"
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderItem"
+                        }
+                    },
+                    "totalAmount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 398.0
+                    },
+                    "remark": {
+                        "type": "string",
+                        "example": "尽快发货"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-10-15T10:30:00Z"
+                    }
+                }
+            },
+            "CreateOrderRequest": {
+                "type": "object",
+                "required": [
+                    "userId",
+                    "items"
+                ],
+                "properties": {
+                    "userId": {
+                        "type": "string",
+                        "example": "U-10001"
+                    },
+                    "items": {
+                        "type": "array",
+                        "minItems": 1,
+                        "items": {
+                            "$ref": "#/components/schemas/OrderItem"
+                        }
+                    },
+                    "remark": {
+                        "type": "string",
+                        "example": "发票抬头：个人"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "mock-generate": {
+      "command": "/Users/a0000/.nvm/versions/node/v24.19.0/bin/node",
+      "args": [
+        "/Users/a0000/Documents/web/my_web_study/practice/React_AI_Practice/node_modules/tsx/dist/cli.mjs",
+        "/Users/a0000/Documents/web/my_web_study/practice/React_AI_Practice/server/src/AI_Agent/mcp/main.ts"
+      ],
+      "cwd": "/Users/a0000/Documents/web/my_web_study/practice/React_AI_Practice/server"
+    }
+  }
+}

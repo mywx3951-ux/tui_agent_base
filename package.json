@@ -1,0 +1,17 @@
+{
+  "name": "tui-agent-base",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TypeScript + Node.js LLM Agent playground: streaming TUI, function calling, MCP server, multi-agent orchestration",
+  "workspaces": [
+    "packages/*",
+    "server",
+    "web"
+  ],
+  "scripts": {
+    "start": "npm run start -w server",
+    "start:multi": "npm run start:multi -w server",
+    "mcp": "npm run mcp -w server",
+    "typecheck": "npm run typecheck -w server"
+  }
+}

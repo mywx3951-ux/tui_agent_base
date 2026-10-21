@@ -1,0 +1,25 @@
+[
+  {
+    "id": "number",
+    "name": "string",
+    "email": "string",
+    "age": "number",
+    "isVip": "boolean",
+    "createdAt": "string",
+    "avatar": "string",
+    "tags": "string[]",
+    "status": "string@enum:active|pending|banned",
+    "profile": {
+      "bio": "string",
+      "website": "string",
+      "level": "number"
+    },
+    "orders": [
+      {
+        "orderId": "string",
+        "amount": "number",
+        "paid": "boolean"
+      }
+    ]
+  }
+]
